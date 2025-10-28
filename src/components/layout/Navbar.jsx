@@ -70,7 +70,7 @@ export function Navbar() {
               className="relative group text-gray-700 dark:text-gray-300 font-medium transition"
             >
               {link.name}
-              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
+              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-green-600 transition-all group-hover:w-full"></span>
             </Link>
           ))}
 

@@ -41,7 +41,7 @@ export default function Dashboard() {
 
 
   return (
-    <div className="2xl:container mx-auto py-16 px-6">
+    <div className="2xl:container mx-auto py-16 px-6 pt-24">
         <Navbar/>
       <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">
         Vapi Usage Dashboard
@@ -76,7 +76,7 @@ export default function Dashboard() {
       </div>
 
       {/* Calls Table */}
-      <div className="overflow-x-auto h-[100vh]">
+      <div className="overflow-x-auto h-[100vh] scrollar">
         <table className="w-[400%] md:w-[150%] border-collapse border border-gray-300 dark:border-gray-700">
           <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>

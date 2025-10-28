@@ -120,3 +120,40 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* ===== Scrollbar Styles ===== */
+.scrollar::-webkit-scrollbar {
+  width: 8px;
+  height: 8cpx;
+}
+
+/* Track */
+.scrollar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+.scrollar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollar::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Dark mode support */
+.dark .scrollar::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.dark .scrollar::-webkit-scrollbar-thumb {
+  background: #00a63e;
+}
+
+.dark .scrollar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
