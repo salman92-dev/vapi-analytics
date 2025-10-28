@@ -76,9 +76,9 @@ export default function Dashboard() {
       </div>
 
       {/* Calls Table */}
-      <div className="overflow-x-auto h-[100vh] scrollar">
+      <div className="overflow-x-auto h-[100vh] scrollar rounded-xl">
         <table className="w-[400%] md:w-[150%] border-collapse border border-gray-300 dark:border-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-800">
+          <thead className="sticky -top-[1px] bg-gray-100 dark:bg-gray-800">
             <tr>
               <th className="border p-3 text-left">Type</th>
               <th className="border p-3 text-left">Start Time</th>
