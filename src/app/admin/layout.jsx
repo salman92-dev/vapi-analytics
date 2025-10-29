@@ -6,16 +6,20 @@ export default function AdminLayout({children}) {
   const [darkMode, setDarkMode] = useState(false);
 
     // ✅ Load theme from localStorage on mount
-    useEffect(() => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        setDarkMode(true);
-        document.documentElement.classList.add("dark");
-      } else {
-        setDarkMode(false);
-        document.documentElement.classList.remove("dark");
-      }
-    }, []);
+   useEffect(() => {
+  const savedTheme = localStorage.getItem("theme");
+
+  queueMicrotask(() => {
+    if (savedTheme === "dark") {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark");
+    }
+  });
+}, []);
+
 
   return (
     <div className="flex h-screen bg-gray-100">

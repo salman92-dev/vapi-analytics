@@ -13,8 +13,10 @@ export function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   // ✅ Load theme from localStorage on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
+useEffect(() => {
+  const savedTheme = localStorage.getItem("theme");
+
+  queueMicrotask(() => {
     if (savedTheme === "dark") {
       setDarkMode(true);
       document.documentElement.classList.add("dark");
@@ -22,7 +24,9 @@ export function Navbar() {
       setDarkMode(false);
       document.documentElement.classList.remove("dark");
     }
-  }, []);
+  });
+}, []);
+
 
   // ✅ Save theme preference & toggle class
   const toggleTheme = () => {
