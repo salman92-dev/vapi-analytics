@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,12 +13,42 @@ import { Navbar } from "@/components/layout/Navbar";
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: integrate authentication logic
-    setTimeout(() => setLoading(false), 1500);
+    setError("");
+
+    try {
+
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Login failed. Try again.");
+        return;
+      }
+
+      // ✅ Store token securely (for now using localStorage)
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect to dashboard
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,8 +82,13 @@ export default function LoginPage() {
                   <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <Input
                     type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
+                    name="email"
+                    autoComplete="email"
                     className="pl-10 py-6 rounded-xl border-gray-300 dark:border-gray-700"
                   />
                 </div>
@@ -67,6 +103,8 @@ export default function LoginPage() {
                   <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <Input
                     type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
                     className="pl-10 pr-10 py-6 rounded-xl border-gray-300 dark:border-gray-700"
@@ -85,15 +123,10 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Forgot password */}
-              <div className="flex items-center justify-between text-sm mt-2">
-                <Link
-                  href="/forgot-password"
-                  className="text-red-400 hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+              {/* Error Message */}
+              {error && (
+                <p className="text-sm text-red-500 text-center">{error}</p>
+              )}
 
               {/* Login button */}
               <Button
@@ -104,6 +137,7 @@ export default function LoginPage() {
                 {loading ? "Logging in..." : "Login"}
               </Button>
 
+              {/* Signup link */}
               <p className="text-center text-gray-600 dark:text-gray-400 text-sm mt-6">
                 Don’t have an account?{" "}
                 <Link href="/register" className="text-green-600 hover:underline">
@@ -116,8 +150,8 @@ export default function LoginPage() {
       </motion.section>
 
       <footer className="py-6 text-center text-gray-500 text-sm">
-        © {new Date().getFullYear()} <span className="font-medium text-green-600">EchoStats</span>. All rights reserved.
-
+        © {new Date().getFullYear()}{" "}
+        <span className="font-medium text-green-600">EchoStats</span>. All rights reserved.
       </footer>
     </main>
   );

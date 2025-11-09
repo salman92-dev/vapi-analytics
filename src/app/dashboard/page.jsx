@@ -1,111 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
-export default function Dashboard() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/vapi-usage");
-        const json = await res.json();
-        console.log(json)
-        setData(json);
-      } catch (err) {
-        console.error("Error fetching Vapi usage:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (loading)
-    return (
-      <div className="2xl:container flex items-center justify-center h-screen bg-white/80 dark:bg-gray-900/50 text-gray-500 dark:text-white">
-        <Loader2 className="animate-spin mr-2" /> Loading data...
-      </div>
-    );
-
-  if (!data)
-    return (
-      <div className="text-center py-20 text-red-500">
-        Failed to load data.
-      </div>
-    );
-
-
+export default function DashboardWelcome() {
   return (
-    <div className="2xl:container mx-auto py-16 px-6 pt-24">
-        <Navbar/>
-      <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">
-        Vapi Usage Dashboard
-      </h1>
+    <div className="flex flex-col items-center justify-center h-screen bg-white text-gray-800 relative overflow-hidden">
+      {/* Soft blurred background accents */}
+      <div className="absolute w-72 h-72 bg-green-100 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
+      <div className="absolute w-96 h-96 bg-teal-100 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
 
-      {/* Summary Cards */}
-      <div className="grid md:grid-cols-4 gap-6 mb-10">
-        <Card>
-          <CardContent className="p-4 text-center">
-            <h3 className="text-sm text-gray-500">Total Calls</h3>
-            <p className="text-2xl font-semibold">{data.length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <h3 className="text-sm text-gray-500">Inbound</h3>
-            <p className="text-2xl font-semibold">{data.filter((c) => c.type === "inboundPhoneCall").length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <h3 className="text-sm text-gray-500">Web Calls</h3>
-            <p className="text-2xl font-semibold">{data.filter((c) => c.type === "webCall").length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
-            <h3 className="text-sm text-gray-500">Total Cost</h3>
-            <p className="text-2xl font-semibold">${data.reduce((sum, c) => sum + (c.cost || 0), 0)}</p>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Title & Subtitle */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-center px-6 relative z-10"
+      >
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-500">
+          Welcome to Your Dashboard
+        </h1>
+        <p className="text-lg md:text-xl text-gray-600 max-w-xl mx-auto">
+          Manage your conversations, explore insights, and connect smarter — all in one place.
+        </p>
+      </motion.div>
 
-      {/* Calls Table */}
-      <div className="overflow-x-auto h-[100vh] scrollar rounded-xl">
-        <table className="w-[400%] md:w-[150%] border-collapse border border-gray-300 dark:border-gray-700">
-          <thead className="sticky -top-[1px] bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="border p-3 text-left">Type</th>
-              <th className="border p-3 text-left">Start Time</th>
-              <th className="border p-3 text-left">End Time</th>
-              <th className="border p-3 text-left">Status</th>
-              <th className="border p-3 text-left">Assistant</th>
-              <th className="border p-3 text-left">Reason</th>
-              <th className="border p-3 text-left">Created At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((call) => (
-              <tr key={call.id} className="border-t dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900">
-                <td className="p-3">{call.type}</td>
-                <td className="p-3">{call.startedAt ? new Date(call.startedAt).toLocaleString() : "—"}</td>
-                <td className="p-3">{call.endedAt? new Date(call.endedAt).toLocaleString() : "—"}</td>
-                <td className="p-3">{call.status}</td>
-                <td className="p-3">{call.assistantOverrides?.name || "—"}</td>
-                <td className="p-3">{call.endedReason || "—"}</td>
-                <td className="p-3">
-                  {new Date(call.createdAt).toLocaleString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {/* Beautiful CTA Button */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
+        className="mt-10 relative z-10"
+      >
+        <Link href="/dashboard/analytics">
+          <motion.button
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0px 0px 20px rgba(16,185,129,0.3)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:from-green-600 hover:to-emerald-700 transition"
+          >
+            🚀 Go to Analytics
+          </motion.button>
+        </Link>
+      </motion.div>
     </div>
   );
 }

@@ -137,13 +137,13 @@ for (let i = 0; i < calls.length; i++) {
       {/* Summary Cards */}
       <div className="grid md:grid-cols-4 gap-6 mb-10">
         <Card>
-          <CardContent className="p-4 text-center">
+          <CardContent className="p-4">
             <h3 className="text-sm text-gray-500">Total Calls min</h3>
             <p className="text-2xl font-semibold">{totalMinutes.toFixed(2)}{ calls.legth}</p>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="p-4 text-center">
+          <CardContent className="p-4">
             <h3 className="text-sm text-gray-500">Number of Calls</h3>
             <p className="text-2xl font-semibold">
               {calls.length}
@@ -151,7 +151,7 @@ for (let i = 0; i < calls.length; i++) {
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="p-4 text-center">
+          <CardContent className="p-4">
             <h3 className="text-sm text-gray-500">Web Calls</h3>
             <p className="text-2xl font-semibold">
               {calls.filter((c) => c.type === "webCall").length}
@@ -159,7 +159,7 @@ for (let i = 0; i < calls.length; i++) {
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="p-4 text-center">
+          <CardContent className="p-4">
             <h3 className="text-sm text-gray-500">Total Cost</h3>
             <p className="text-2xl font-semibold">
               ${calls.reduce((sum, c) => sum + (c.cost || 0), 0).toFixed(2)}

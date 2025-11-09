@@ -11,6 +11,8 @@ import {
   LogOut,
   Menu,
   X,
+  Brain,
+  Bot
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -18,6 +20,9 @@ const navItems = [
   { name: "Dashboard", href: "/admin", icon: Home },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart2 },
   { name: "Add Client", href: "/admin/add-client", icon: Users },
+  { name: "All Clients", href: "/admin/clients", icon: Users },
+  { name: "Assign a Bot", href: "/admin/assign-bot", icon: Brain },
+  { name: "All  Bots", href: "/admin/bots", icon: Bot },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
