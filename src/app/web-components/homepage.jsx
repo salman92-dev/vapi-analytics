@@ -217,7 +217,7 @@ export default function HomePage() {
               Start Managing Your Clients Today
             </h2>
             <p className="text-green-50 mb-10 max-w-2xl mx-auto text-lg leading-relaxed">
-              Simplify tracking, visualize insights, and keep your clients' API data organized securely.
+              Simplify tracking, visualize insights, and keep your {`clients'`} API data organized securely.
             </p>
             <Link href="/login">
               <Button
